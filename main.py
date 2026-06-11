@@ -104,14 +104,15 @@ def actualizar_pais(paises):
         print(f"Ocurrió un error al actualizar el pais: {e}")
 
 
-def buscar_pais(paises):
-    try:
+def buscar_pais(paises): #funcion para buscar un pais dentro del CSV
+    try: 
+#input de la busqueda
         busqueda = input("Ingrese el nombre del pais a buscar: ").strip().capitalize()
         if not busqueda:
             print("Error: Debe ingresar un nombre.")
             return
 
-        # Búsqueda parcial o exacta
+#busqueda parcial o exacta
         resultados = [p for p in paises if busqueda.lower() in p['nombre'].lower()]
 
         if not resultados:
@@ -125,17 +126,17 @@ def buscar_pais(paises):
         print(f"Ocurrió un error al buscar el pais: {e}")
 
 
-def cargar_paises(nombre_archivo):
+def cargar_paises(nombre_archivo): #funcion para cargar el CSV
     paises = []
-    try:
+    try: 
         with open(nombre_archivo, 'r', newline='', encoding='utf-8') as archivo:
-            lector = csv.DictReader(archivo)  # DictReader saltea el encabezado automáticamente
+            lector = csv.DictReader(archivo)  #dictreader para leer el csv
             for fila in lector:
                 try:
-                    pais = {
+                    pais = { 
                         'nombre': fila['nombre'].strip(),
-                        'poblacion': int(fila['poblacion']),    # Convertir a int acá
-                        'superficie': int(fila['superficie']),  # Convertir a int acá
+                        'poblacion': int(fila['poblacion']),    
+                        'superficie': int(fila['superficie']),  
                         'continente': fila['continente'].strip()
                     }
                     paises.append(pais)
@@ -145,7 +146,7 @@ def cargar_paises(nombre_archivo):
         print(f"Advertencia: No se encontró '{nombre_archivo}'. Se empieza con lista vacía.")
     return paises
 
-
+#Función para guardar el CSV
 def guardar_paises(paises):
     with open('paises.csv', 'w', newline='', encoding='utf-8') as archivo:
         escritor = csv.writer(archivo)
@@ -154,7 +155,7 @@ def guardar_paises(paises):
             escritor.writerow([p['nombre'], p['poblacion'], p['superficie'], p['continente']])
 
 
-# --- Programa principal ---
+#  Programa / menu principal 
 paises = cargar_paises('paises.csv')
 
 while True:
@@ -172,19 +173,19 @@ while True:
     elif opcion == 6:
         mostrar_estadisticas(paises)
     elif opcion == 7:
-        print("Saliendo del programa. ¡Hasta luego!")
+        print("Saliendo del programa.")
         break
     elif opcion is not None:
         print("Opción no válida. Ingrese un número del 1 al 7.")
 
 #funciones principales:
-#def menu():
-#def cargar_paises(nombre_archivo)
+#def menu(): (Hecho)
+#def cargar_paises(nombre_archivo) (Hecho)
 
 #funciones de manejo de datos:
 #1 - def agregar_pais(paises, nombre, poblacion, superficie, continente) (Hecho)
-#2 - def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None)
-#3 - def buscar_pais(paises, nombre)
+#2 - def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None) (Hecho)
+#3 - def buscar_pais(paises, nombre) (Hecho)
 
 #funciones de filtrado (4) y ordenamiento (5):
 #def filtrar_por_continente(paises, continente) (4)
