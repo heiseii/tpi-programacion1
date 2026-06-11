@@ -3,24 +3,24 @@
 #def cargar_paises(nombre_archivo)
 
 #funciones de manejo de datos:
-#def agregar_pais(paises, nombre, poblacion, superficie, continente)
-#def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None)
-#def buscar_pais(paises, nombre)
+#1 - def agregar_pais(paises, nombre, poblacion, superficie, continente)
+#2 - def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None)
+#3 - def buscar_pais(paises, nombre)
 
-#funciones de filtrado y ordenamiento:
-#def filtrar_por_continente(paises, continente)
-#def filtrar_por_poblacion(paises, min_poblacion=None, max_poblacion=None)
-#def filtrar_por_superficie(paises, min_superficie=None, max_superficie=None)
-#def ordenar_por_nombre(paises, ascendente=True)
-#def ordenar_por_poblacion(paises, ascendente=True)
-#def ordenar_por_superficie(paises, ascendente=True)
+#funciones de filtrado (4) y ordenamiento (5):
+#def filtrar_por_continente(paises, continente) (4)
+#def filtrar_por_poblacion(paises, min_poblacion=None, max_poblacion=None) (4)
+#def filtrar_por_superficie(paises, min_superficie=None, max_superficie=None) (4)
+#def ordenar_por_nombre(paises, ascendente=True) (5)
+#def ordenar_por_poblacion(paises, ascendente=True) (5)
+#def ordenar_por_superficie(paises, ascendente=True) (5)
 
-#funciones de mostrar estadisiticas:
-#def pais_mas_poblado(paises)
-#def pais_menos_poblado(paises)
-#def promedio_poblacion(paises)
-#def promedio_superficie(paises)
-#def paises_por_continente(paises)
+#funciones de mostrar estadisiticas (6):
+#def pais_mas_poblado(paises) (6)
+#def pais_menos_poblado(paises) (6)
+#def promedio_poblacion(paises) (6)
+#def promedio_superficie(paises) (6)
+#def paises_por_continente(paises) (6)
 
 import csv 
 
@@ -45,13 +45,15 @@ def menu(): #funcion para mostrar el menu y obtener la opcion del usuario
         print(f"Ocurrió un error: {e}")
         return None
     
+    
     #Aca irian las funciones con las condicionales
 
 #funcion para cargar los paises desde un archivo csv
 def cargar_paises(nombre_archivo): 
     paises = [] #lista vacia para almacenar los paises
-    with open(nombre_archivo, mode='r', encoding='utf-8') as archivo:
-        lector_csv = csv.DictReader(archivo)
+    try:
+        with open(nombre_archivo, mode='r', encoding='utf-8') as archivo:
+            lector_csv = csv.DictReader(archivo)
         for fila in lector_csv:
             pais = {
                 'nombre': str(fila['nombre']),
@@ -60,4 +62,44 @@ def cargar_paises(nombre_archivo):
                 'continente': str(fila['continente'])
             }
             paises.append(pais)
+    except KeyError as e:
+        print(f"Error: La columna {e} no se encuentra en el archivo CSV.")
+    except csv.Error as e:
+        print(f"Error al leer el archivo CSV: {e}")
+    except FileNotFoundError:
+        print(f"El archivo {nombre_archivo} no fue encontrado.")
+    except Exception as e:
+        print(f"Ocurrió un error al cargar los países: {e}")
     return paises
+
+#funcion para agregar un nuevo pais a la lista de paises (1)
+def agregar_pais(paises, nombre, poblacion, superficie, continente):
+    try:    
+        pais = {
+            'nombre': nombre,
+            'poblacion': poblacion,
+            'superficie': superficie,
+            'continente': continente
+        }
+        paises.append(pais)
+        return paises
+    except Exception as e:
+        print(f"Ocurrió un error al agregar el país: {e}")
+        return paises
+
+def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None):
+    try:
+        for pais in paises:
+            if pais['nombre'] == nombre:
+                if poblacion is not None:
+                    pais['poblacion'] = poblacion
+                if superficie is not None:
+                    pais['superficie'] = superficie
+                if continente is not None:
+                    pais['continente'] = continente
+                return paises
+        return paises
+    except Exception as e:
+        print(f"Ocurrió un error al actualizar el país: {e}")
+        return paises
+
