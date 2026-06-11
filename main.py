@@ -1,3 +1,182 @@
+from mostrar_estadisticas import *
+from menu import *
+import csv 
+
+
+def agregar_pais(paises):
+    try:
+        nombre = input("Ingrese el nombre del pais: ").strip().capitalize()
+        if not nombre:
+            print("Error: El nombre no puede estar vacío.")
+            return
+# Verificar si ya existe (búsqueda exacta)
+        if any(p['nombre'].lower() == nombre.lower() for p in paises):
+            print("Error: El pais ya existe. Use la opción 2 para actualizarlo.")
+            return
+#Input de poblacion
+        poblacion_input = input("Ingrese la poblacion del pais: ").strip()
+        if not poblacion_input.isdigit():
+            print("Error: La poblacion debe ser un número entero positivo.")
+            return
+        poblacion = int(poblacion_input)
+        if poblacion <= 0:
+            print("Error: La poblacion debe ser mayor a cero.")
+            return
+#input de superficie
+        superficie_input = input("Ingrese la superficie del pais (km²): ").strip()
+        if not superficie_input.isdigit():
+            print("Error: La superficie debe ser un número entero positivo.")
+            return
+        superficie = int(superficie_input)
+        if superficie <= 0:
+            print("Error: La superficie debe ser mayor a cero.")
+            return
+#input de continente
+        continente = input("Ingrese el continente del pais: ").strip().capitalize()
+        if not continente:
+            print("Error: El continente no puede estar vacío.")
+            return
+
+# Escribir en CSV
+        with open('paises.csv', 'a', newline='', encoding='utf-8') as archivo:
+            escritor = csv.writer(archivo)
+            escritor.writerow([nombre, poblacion, superficie, continente])
+
+        # Agregar a la lista en memoria también
+        paises.append({
+            'nombre': nombre,
+            'poblacion': poblacion,
+            'superficie': superficie,
+            'continente': continente
+        })
+        print(f"País '{nombre}' agregado correctamente.")
+    except ValueError as e:
+        print(f"Ocurrió un error al agregar el pais: {e}")
+    except KeyError as e:
+        print(f"Ocurrió un error al agregar el pais: {e}")
+    except Exception as e:
+        print(f"Ocurrió un error al agregar el pais: {e}")
+
+
+def actualizar_pais(paises):
+    try:
+        busqueda = input("Ingrese el nombre del pais a actualizar: ").strip().capitalize()
+        pais = next((p for p in paises if p['nombre'].lower() == busqueda.lower()), None)
+        
+        if pais is None:
+            print(f"No se encontró el país '{busqueda}'.")
+            return
+
+        print("¿Qué desea actualizar?")
+        print("  1. Población")
+        print("  2. Superficie")
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion == "1":
+            nueva_input = input("Ingrese la nueva población: ").strip()
+            if not nueva_input.isdigit() or int(nueva_input) <= 0:
+                print("Error: La población debe ser un número entero mayor a cero.")
+                return
+            pais['poblacion'] = int(nueva_input)
+            print("Población actualizada correctamente.")
+
+        elif opcion == "2":
+            nueva_input = input("Ingrese la nueva superficie (km²): ").strip()
+            if not nueva_input.isdigit() or int(nueva_input) <= 0:
+                print("Error: La superficie debe ser un número entero mayor a cero.")
+                return
+            pais['superficie'] = int(nueva_input)
+            print("Superficie actualizada correctamente.")
+
+        else:
+            print("Opción no válida.")
+            return
+
+        #Reescribir el CSV completo con los datos actualizados
+        guardar_paises(paises)
+    except StopIteration:
+        print(f"No se encontró el país '{busqueda}'.")
+    except ValueError:
+        print("Opción no válida. Por favor, ingrese un número.")
+    except TypeError:
+        print("Opción no válida. Por favor, ingrese un número.")
+    except Exception as e:
+        print(f"Ocurrió un error al actualizar el pais: {e}")
+
+
+def buscar_pais(paises):
+    try:
+        busqueda = input("Ingrese el nombre del pais a buscar: ").strip().capitalize()
+        if not busqueda:
+            print("Error: Debe ingresar un nombre.")
+            return
+
+        # Búsqueda parcial o exacta
+        resultados = [p for p in paises if busqueda.lower() in p['nombre'].lower()]
+
+        if not resultados:
+            print(f"No se encontraron países con '{busqueda}'.")
+        else:
+            print(f"\nSe encontraron {len(resultados)} resultado(s):")
+            for p in resultados:
+                print(f"  Nombre: {p['nombre']} | Población: {p['poblacion']:,} | Superficie: {p['superficie']:,} km² | Continente: {p['continente']}")
+
+    except Exception as e:
+        print(f"Ocurrió un error al buscar el pais: {e}")
+
+
+def cargar_paises(nombre_archivo):
+    paises = []
+    try:
+        with open(nombre_archivo, 'r', newline='', encoding='utf-8') as archivo:
+            lector = csv.DictReader(archivo)  # DictReader saltea el encabezado automáticamente
+            for fila in lector:
+                try:
+                    pais = {
+                        'nombre': fila['nombre'].strip(),
+                        'poblacion': int(fila['poblacion']),    # Convertir a int acá
+                        'superficie': int(fila['superficie']),  # Convertir a int acá
+                        'continente': fila['continente'].strip()
+                    }
+                    paises.append(pais)
+                except (ValueError, KeyError) as e:
+                    print(f"Advertencia: fila inválida en el CSV ignorada ({e})")
+    except FileNotFoundError:
+        print(f"Advertencia: No se encontró '{nombre_archivo}'. Se empieza con lista vacía.")
+    return paises
+
+
+def guardar_paises(paises):
+    with open('paises.csv', 'w', newline='', encoding='utf-8') as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow(['nombre', 'poblacion', 'superficie', 'continente'])
+        for p in paises:
+            escritor.writerow([p['nombre'], p['poblacion'], p['superficie'], p['continente']])
+
+
+# --- Programa principal ---
+paises = cargar_paises('paises.csv')
+
+while True:
+    opcion = menu()
+    if opcion == 1:
+        agregar_pais(paises)
+    elif opcion == 2:
+        actualizar_pais(paises)
+    elif opcion == 3:
+        buscar_pais(paises)
+    # elif opcion == 4:
+    #     filtrar(paises)
+    # elif opcion == 5:
+    #     ordenar(paises)
+    elif opcion == 6:
+        mostrar_estadisticas(paises)
+    elif opcion == 7:
+        print("Saliendo del programa. ¡Hasta luego!")
+        break
+    elif opcion is not None:
+        print("Opción no válida. Ingrese un número del 1 al 7.")
+
 #funciones principales:
 #def menu():
 #def cargar_paises(nombre_archivo)
@@ -21,154 +200,3 @@
 #def promedio_poblacion(paises) (6)
 #def promedio_superficie(paises) (6)
 #def paises_por_continente(paises) (6)
-from mostrar_estadisticas import *
-from menu import *
-import csv 
-
-#funcion | 1 |
-#cargar los paises desde un archivo csv
-def agregar_pais():
-    try:
-        with open('paises.csv', 'a', newline='') as archivo:
-            escritor = csv.writer(archivo)
-
-            #Input del nombre
-            nombre = str(input("Ingrese el nombre del pais: "))
-            nombre.strip().capitalize()
-            if buscar_pais(paises, nombre):
-                print("Error: El pais ya existe en la lista. Elija la opcion 2 si quiere actualizarlo.")
-                return
-            elif not nombre.isalpha():
-                print("Error: El nombre del pais debe contener letras.")
-                return
-            
-            #Input de la poblacion
-            poblacion = int(input("Ingrese la poblacion del pais: "))
-            if poblacion < 0:
-                print("Error: La poblacion no puede ser negativa.")
-                return
-            elif poblacion == 0:
-                print("Error: La poblacion no puede ser cero.")
-                return
-            elif not isinstance(poblacion, int):
-                print("Error: La poblacion debe ser un numero entero.")
-                return
-            
-            #Input de la superficie
-            superficie = int(input("Ingrese la superficie del pais: "))
-            if poblacion < 0:
-                print("Error: La superficie no puede ser negativa.")
-                return
-            elif poblacion == 0:
-                print("Error: La superficie no puede ser cero.")
-                return
-            elif not isinstance(poblacion, int):
-                print("Error: La superficie debe ser un numero entero.")
-                return
-            
-            #Input del continente
-            continente = str(input("Ingrese el continente del pais: "))
-            continente.strip().capitalize()
-            if not continente.isalpha():
-                print("Error: El continente debe contener letras.")
-                return
-
-            nombre = nombre.strip().capitalize()
-            continente = continente.strip().capitalize()
-            escritor.writerow([nombre, poblacion, superficie, continente])
-            print("Pais agregado correctamente.")
-    except KeyError:
-        print("Error: Los datos ingresados no son validos.")
-    except FileNotFoundError:
-        print("Error: No se encontro el archivo")
-    except Exception as e:
-        print(f"Ocurrio un error al agregar el pais: {e}")
-            
-
-#funcion | 2 |
-#actualizar los datos de un pais
-def actualizar_pais():
-    try:
-        busqueda = input("Ingrese el nombre del pais a actualizar: ").strip().capitalize()
-        pais = buscar_pais(paises, busqueda)
-    except KeyError:
-        print("Los datos ingresados no son validos.")
-    except FileNotFoundError:
-        print("No se encontro el archivo")
-    except Exception as e:
-        print(f"Ocurrio un error al actualizar el pais: {e}")
-    
-        print("Que quiere actualizar?")
-        opcion = input("""
-        1. Poblacion
-        2. Superficie
-        """)
-        if opcion == "1":
-            pais['poblacion'] = int(input("Ingrese la nueva poblacion del pais: "))
-            if pais['poblacion'] < 0:
-                print("Error: La poblacion no puede ser negativa.")
-                return
-            elif pais['poblacion'] == 0:
-                print("Error: La poblacion no puede ser cero.")
-                return
-            elif not isinstance(pais['poblacion'], int):
-                print("Error: La poblacion debe ser un numero entero.")
-                return
-        elif opcion == "2":
-            pais['superficie'] = int(input("Ingrese la nueva superficie del pais: "))
-    else:
-            print("Opcion no valida.")
-
-            
-    
-#funcion para buscar un pais en la lista de paises (3)
-def buscar_pais(paises, nombre):
-    try:
-        busqueda = input("Ingrese el nombre del pais a buscar: ").strip().capitalize()
-        if not busqueda.isalpha():
-            print("Error: El nombre del pais debe contener letras.")
-            return
-    except KeyError:
-        print("Los datos ingresados no son validos.")
-    except FileNotFoundError:
-        print("No se encontro el archivo")
-    except Exception as e:
-        print(f"Ocurrio un error al buscar el pais: {e}")
-    else:
-        return next((pais for pais in paises if pais['nombre'] == busqueda), None)
-    
-
-#menu
-def cargar_paises(nombre_archivo):
-    paises = []
-    with open(nombre_archivo, 'r', newline='') as archivo:
-        lector = csv.reader(archivo)
-        for fila in lector:
-            pais = {
-                'nombre': fila[0],
-                'poblacion': (fila[1]),
-                'superficie': (fila[2]),
-                'continente': fila[3]
-            }
-            paises.append(pais)
-    return paises
-
-paises = cargar_paises('paises.csv')
-while True:
-    opcion = menu()
-    if opcion == 1:
-        agregar_pais()
-    elif opcion == 2:
-        actualizar_pais()
-    elif opcion == 3:
-        buscar_pais(paises)
-    #elif opcion == 4:
-        #filtrar_por_continente(paises)
-    #elif opcion == 5:
-        #filtrar_por_poblacion(paises)
-    elif opcion == 6:
-        mostrar_estadisticas(paises)
-    elif opcion == 7:
-        break
-    
-    

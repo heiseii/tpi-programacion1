@@ -1,31 +1,46 @@
-#Funcion para mostrar estadisticas (6)
 import csv
+
 def mostrar_estadisticas(paises):
+    if not paises:
+        print("No hay países cargados.")
+        return
+
     print("\nEstadísticas:")
-    print(f"Pais mas poblado: {pais_mas_poblado(paises)}")
-    print(f"Pais menos poblado: {pais_menos_poblado(paises)}")
-    print(f"Promedio de poblacion: {promedio_poblacion(paises)}")
-    print(f"Promedio de superficie: {promedio_superficie(paises)}")
-    print(f"Paises por continente: {paises_por_continente(paises)}")
+    print(f"País más poblado: {pais_mas_poblado(paises)}")
+    print(f"País menos poblado: {pais_menos_poblado(paises)}")
+    print(f"Promedio población: {promedio_poblacion(paises):,.0f} habitantes.")
+    print(f"Promedio superficie: {promedio_superficie(paises):,.0f}")
+    
+    print("\n  Países por continente:")
+    conteo = paises_por_continente(paises)
+    for continente, nombres in conteo.items():
+        print(f"    {continente}: {len(nombres)} país/es -> {', '.join(nombres)}")
 
-def pais_mas_poblado(paises):
-    return max(paises, key=lambda pais: pais['poblacion'])['nombre']
 
-def pais_menos_poblado(paises):
-    return min(paises, key=lambda pais: pais['poblacion'])['nombre']
+def pais_mas_poblado(paises): #funcion para obtener el pais mas poblado
+    return max(paises, key=lambda p: p['poblacion'])['nombre']
 
-def promedio_poblacion(paises):
-    with open('paises.csv', 'r', newline='') as archivo:
-        lector = csv.reader(archivo)
-        poblaciones = [int(fila[1]) for fila in lector]
-        print("Poblaciones:", poblaciones)  # Print the poblaciones list
-        return sum(poblaciones) / len(poblaciones)
 
-def promedio_superficie(paises):
-    total_superficie = sum(pais['superficie'] for pais in paises)
-    print("Total superficie:", total_superficie)  # Print the total superficie
-    return total_superficie / len(paises)
+def pais_menos_poblado(paises): #funcion para obtener el pais menos poblado 
+    return min(paises, key=lambda p: p['poblacion'])['nombre']
 
-def paises_por_continente(paises):
-    print("Paises:", paises)  # Print the countries list
-    return {continente: [pais['nombre'] for pais in paises if pais['continente'] == continente] for continente in set(pais['continente'] for pais in countries)}
+
+def promedio_poblacion(paises): #funcion para obtener el promedio de poblacion
+    # Usamos la lista en memoria, no re-leemos el CSV
+    total = sum(p['poblacion'] for p in paises)
+    return total / len(paises)
+
+
+def promedio_superficie(paises): #funcion para obtener el promedio de superficie
+    total = sum(p['superficie'] for p in paises)
+    return total / len(paises)
+
+#funcion para obtener los paises por continente
+def paises_por_continente(paises): 
+    resultado = {}
+    for pais in paises:
+        continente = pais['continente']
+        if continente not in resultado:
+            resultado[continente] = []
+        resultado[continente].append(pais['nombre'])
+    return resultado
