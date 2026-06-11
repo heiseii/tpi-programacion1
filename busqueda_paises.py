@@ -87,6 +87,7 @@ def agregar_pais(paises, nombre, poblacion, superficie, continente):
         print(f"Ocurrió un error al agregar el país: {e}")
         return paises
 
+#funcion para actualizar un pais de la lista de paises (2)
 def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None):
     try:
         for pais in paises:
@@ -102,4 +103,14 @@ def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=
     except Exception as e:
         print(f"Ocurrió un error al actualizar el país: {e}")
         return paises
+    
+#funcion para buscar un pais en la lista de paises (3)
+def buscar_pais(paises, nombre):
+    for pais in paises:
+        if pais['nombre'] == nombre:
+            return pais
+    return None
 
+#funcion para mostrar estadisticas (6)
+
+#(...)
