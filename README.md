@@ -73,6 +73,7 @@ tpi-programacion1/
 ## Ejemplos de uso
 
 **Agregar un país:**
+
 Ingrese el nombre del pais: México
 
 Ingrese la poblacion del pais: 126014024
@@ -84,6 +85,7 @@ Ingrese el continente del pais: América
 País 'México' agregado correctamente.
 
 **Buscar un país:**
+
 Ingrese el nombre del pais a buscar: ar
 
 Se encontraron 2 resultado(s):
