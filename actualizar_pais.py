@@ -1,5 +1,6 @@
 from guardar_paises import *
-
+#Busca un país por nombre exacto y permite modificar su población o superficie.
+#Si el país no existe, informa al usuario. Al terminar, reescribe el CSV completo.
 def actualizar_pais(paises):
     try:
         busqueda = input("Ingrese el nombre del pais a actualizar: ").strip().capitalize()

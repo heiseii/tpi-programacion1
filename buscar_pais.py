@@ -1,6 +1,5 @@
-#funcion para buscar un pais dentro del CSV:
-#busqueda parcial o exacta de un pais dentro del archivo CSV
-
+# Recorre la lista de países y devuelve todos los que contengan
+# el término ingresado en su nombre, ya sea de forma parcial o exacta.
 def buscar_pais(paises): 
     try: 
 #input de la busqueda

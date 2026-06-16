@@ -1,5 +1,4 @@
-#Funcion para mostrar estadisticas: 
-# pais mas poblado, pais menos poblado, promedio poblacion, promedio superficie
+ # Muestra en consola todas las estadísticas calculadas a partir de la lista en memoria.
 def mostrar_estadisticas(paises):
     if not paises:
         print("No hay países cargados.")
@@ -35,7 +34,8 @@ def promedio_superficie(paises): #funcion para obtener el promedio de superficie
     total = sum(p['superficie'] for p in paises)
     return total / len(paises)
 
-#funcion para obtener los paises por continente
+#Agrupa los países por continente y devuelve un diccionario
+#donde cada clave es un continente y el valor es la lista de países que pertenecen a él.
 def paises_por_continente(paises): 
     resultado = {}
     for pais in paises:

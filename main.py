@@ -7,7 +7,8 @@ from cargar_paises import * #funcion para cargar el CSV
 #from ordenar_paises import * #funcion para ordenar
 from mostrar_estadisticas import * #funcion para mostrar estadisticas
 
-
+# Punto de entrada del programa. Carga los datos del CSV y ejecuta el menú en bucle
+# hasta que el usuario elija salir.
 # Programa / menu principal 
 paises = cargar_paises('paises.csv')
 

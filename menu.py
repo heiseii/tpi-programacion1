@@ -1,3 +1,5 @@
+# Muestra las opciones disponibles y devuelve el número ingresado por el usuario.
+# Si el input no es un número válido, devuelve None y el bucle principal lo maneja.
 def menu():
     print("""
     1. Agregar país
