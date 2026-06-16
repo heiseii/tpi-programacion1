@@ -9,11 +9,13 @@ def agregar_pais(paises):
         if not nombre:
             print("Error: El nombre no puede estar vacío.")
             return
-# Verificar si ya existe (búsqueda exacta)
+        
+        # Verificar si ya existe (búsqueda exacta)
         if any(p['nombre'].lower() == nombre.lower() for p in paises):
             print("Error: El pais ya existe. Use la opción 2 para actualizarlo.")
             return
-#Input de poblacion
+        
+        # Input de poblacion
         poblacion_input = input("Ingrese la poblacion del pais: ").strip()
         if not poblacion_input.isdigit():
             print("Error: La poblacion debe ser un número entero positivo.")
@@ -22,7 +24,8 @@ def agregar_pais(paises):
         if poblacion <= 0:
             print("Error: La poblacion debe ser mayor a cero.")
             return
-#input de superficie
+        
+        # Input de superficie
         superficie_input = input("Ingrese la superficie del pais (km²): ").strip()
         if not superficie_input.isdigit():
             print("Error: La superficie debe ser un número entero positivo.")
@@ -31,32 +34,29 @@ def agregar_pais(paises):
         if superficie <= 0:
             print("Error: La superficie debe ser mayor a cero.")
             return
-#input de continente
+        
+        # Input de continente
         continente = input("Ingrese el continente del pais: ").strip().capitalize()
         if not continente:
             print("Error: El continente no puede estar vacío.")
             return
-
-# Escribir en CSV
-        with open('paises.csv', 'a', newline='', encoding='utf-8') as archivo:
-            escritor = csv.writer(archivo)
-            escritor.writerow([nombre, poblacion, superficie, continente])
-
-        # Agregar a la lista en memoria también
+        
+        # Agregar a la lista en memoria y guardar en CSV
         paises.append({
             'nombre': nombre,
             'poblacion': poblacion,
             'superficie': superficie,
             'continente': continente
         })
+        guardar_paises(paises)
         print(f"País '{nombre}' agregado correctamente.")
+
     except ValueError as e:
         print(f"Ocurrió un error al agregar el pais: {e}")
     except KeyError as e:
         print(f"Ocurrió un error al agregar el pais: {e}")
     except Exception as e:
         print(f"Ocurrió un error al agregar el pais: {e}")
-
 
 def actualizar_pais(paises):
     try:
