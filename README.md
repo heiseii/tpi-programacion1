@@ -9,10 +9,21 @@ Tecnicatura Universitaria en Programación - UTN
 
 ---
 
-## Integrantes
+## Integrantes y participación
 
-- Lucca Joan Weinzettel (M26 C1-02)
-- Juan Cruz Caminos (M26 C1-09)
+**Lucca Joan Weinzettel (M26 C1-02)**
+- Configuración del repositorio y estructura del proyecto
+- Implementación de `agregar_pais()` con validaciones completas
+- Implementación de `actualizar_pais()`
+- Implementación de `buscar_pais()` con soporte de coincidencia parcial
+- Implementación de todas las funciones de estadísticas (`mostrar_estadisticas()`, `pais_mas_poblado()`, `pais_menos_poblado()`, `promedio_poblacion()`, `promedio_superficie()`, `paises_por_continente()`)
+- Modularización del proyecto en archivos separados por responsabilidad
+
+**Juan Cruz Caminos (M26 C1-09)**
+- Creación y mantenimiento del dataset base (`paises.csv`)
+- Documentación técnica del proyecto (informe PDF)
+- Implementación de `filtrar_paises()` (filtrado por continente, rango de población y rango de superficie)
+- Implementación de `ordenar_paises()` (ordenamiento por nombre, población y superficie, ascendente y descendente)
 
 ---
 
@@ -58,16 +69,15 @@ tpi-programacion1/
 
 ## Funcionalidades
 
-| Opción | Descripción |
-|--------|-------------|
-| 1. Agregar país | Solicita nombre, población, superficie y continente. Valida que no haya campos vacíos ni duplicados. |
-| 2. Actualizar país | Permite modificar la población o la superficie de un país existente. |
-| 3. Buscar país | Búsqueda por nombre con coincidencia parcial o exacta. |
-| 4. Filtrar países | Filtra por continente, rango de población o rango de superficie. |
-| 5. Ordenar países | Ordena por nombre, población o superficie de forma ascendente o descendente. |
-| 6. Estadísticas | Muestra el país más y menos poblado, promedios de población y superficie, y cantidad de países por continente. |
-| 7. Salir | Cierra el programa. |
-
+| Opción | Función | Descripción |
+|--------|---------|-------------|
+| 1. Agregar país | `agregar_pais()` | Solicita los cuatro campos requeridos. Valida que no haya campos vacíos, que los valores numéricos sean enteros positivos y que el país no exista previamente. |
+| 2. Actualizar país | `actualizar_pais()` | Busca un país por nombre exacto y permite modificar su población o superficie. Reescribe el CSV completo al terminar. |
+| 3. Buscar país | `buscar_pais()` | Recorre la lista y devuelve todos los países cuyo nombre contenga el término ingresado, de forma parcial o exacta. |
+| 4. Filtrar países | `filtrar_paises()` | Filtra la lista por continente, rango de población o rango de superficie, mostrando solo los registros que cumplan la condición. |
+| 5. Ordenar países | `ordenar_paises()` | Ordena la lista por nombre, población o superficie en dirección ascendente o descendente según elija el usuario. |
+| 6. Estadísticas | `mostrar_estadisticas()` | Calcula y muestra el país con mayor y menor población, el promedio de población y superficie, y el agrupamiento de países por continente. |
+| 7. Salir | — | Termina el bucle principal y cierra el programa. |
 ---
 
 ## Ejemplos de uso
@@ -119,8 +129,8 @@ El archivo `paises.csv` incluye 9 países precargados:
 Argentina, Brasil, Estados Unidos, Alemania, Francia, Italia, Japón, India y China.
 
 El formato del archivo es el siguiente:
-nombre,poblacion,superficie,continente
 
+nombre,poblacion,superficie,continente
 Argentina,45376763,2780400,América
 
 ---
