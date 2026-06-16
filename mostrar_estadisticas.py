@@ -1,5 +1,5 @@
-import csv
-
+#Funcion para mostrar estadisticas: 
+# pais mas poblado, pais menos poblado, promedio poblacion, promedio superficie
 def mostrar_estadisticas(paises):
     if not paises:
         print("No hay países cargados.")
