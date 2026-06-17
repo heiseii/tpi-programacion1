@@ -7,7 +7,6 @@ def agregar_pais(paises):
     try:
         # Input de nombre
         nombre = input("Ingrese el nombre del pais o escriba '0' para cancelar: ").strip().capitalize()
-        print("Operación cancelada.")
         if nombre == "0":
             return
         if not nombre:

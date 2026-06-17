@@ -32,26 +32,3 @@ while True:
     elif opcion is not None:
         print("Opción no válida. Ingrese un número del 1 al 7.")
 
-#funciones principales:
-#def menu(): (Hecho)
-#def cargar_paises(nombre_archivo) (Hecho)
-
-#funciones de manejo de datos:
-#1 - def agregar_pais(paises, nombre, poblacion, superficie, continente) (Hecho)
-#2 - def actualizar_pais(paises, nombre, poblacion=None, superficie=None, continente=None) (Hecho)
-#3 - def buscar_pais(paises, nombre) (Hecho)
-
-#funciones de filtrado (4) y ordenamiento (5):
-#def filtrar_por_continente(paises, continente) (4)
-#def filtrar_por_poblacion(paises, min_poblacion=None, max_poblacion=None) (4)
-#def filtrar_por_superficie(paises, min_superficie=None, max_superficie=None) (4)
-#def ordenar_por_nombre(paises, ascendente=True) (5)
-#def ordenar_por_poblacion(paises, ascendente=True) (5)
-#def ordenar_por_superficie(paises, ascendente=True) (5)
-
-#funciones de mostrar estadisiticas (6): (Hecho)
-#def pais_mas_poblado(paises) (6)
-#def pais_menos_poblado(paises) (6)
-#def promedio_poblacion(paises) (6)
-#def promedio_superficie(paises) (6)
-#def paises_por_continente(paises) (6)

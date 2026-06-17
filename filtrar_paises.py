@@ -14,7 +14,6 @@ def filtrar_paises(paises): #Filtra la lista de países.
             opcion = input("Seleccione una opción: ")
             if opcion == "1":
                 continente = input("Ingrese el continente: ")
-                continente = continente.strip().capitalize()
                 filtrar_por_continente(paises, continente)
             elif opcion == "2":
                 min_poblacion = input("Ingrese la población minima: ")
@@ -37,7 +36,7 @@ def filtrar_paises(paises): #Filtra la lista de países.
 
 def filtrar_por_continente(paises, continente):
     for pais in paises:
-        if pais['continente'].lower() == continente.strip().capitalize():
+        if pais['continente'].lower() == continente.lower():
             print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def filtrar_por_poblacion(paises, min_poblacion, max_poblacion):

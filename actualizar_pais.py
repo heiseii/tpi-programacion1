@@ -5,7 +5,6 @@ def actualizar_pais(paises):
     try:
         busqueda = input("Ingrese el nombre del pais a actualizar o escriba '0' para cancelar: ").strip().capitalize()
         if busqueda == "0":
-            print("Operación cancelada.")
             return
         pais = next((p for p in paises if p['nombre'].lower() == busqueda.lower()), None)
         if pais is None:
