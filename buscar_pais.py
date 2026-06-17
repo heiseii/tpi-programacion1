@@ -3,7 +3,10 @@
 def buscar_pais(paises): 
     try: 
 #input de la busqueda
-        busqueda = input("Ingrese el nombre del pais a buscar: ").strip().capitalize()
+        busqueda = input("Ingrese el nombre del pais a buscar o escriba '0' para cancelar: ").strip().capitalize()
+        print("Operación cancelada.")
+        if busqueda == "0":
+            return
         if not busqueda:
             print("Error: Debe ingresar un nombre.")
             return

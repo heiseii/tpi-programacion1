@@ -5,7 +5,11 @@ from guardar_paises import *
 # y que el país no exista previamente en la lista.
 def agregar_pais(paises):
     try:
-        nombre = input("Ingrese el nombre del pais: ").strip().capitalize()
+        # Input de nombre
+        nombre = input("Ingrese el nombre del pais o escriba '0' para cancelar: ").strip().capitalize()
+        print("Operación cancelada.")
+        if nombre == "0":
+            return
         if not nombre:
             print("Error: El nombre no puede estar vacío.")
             return
