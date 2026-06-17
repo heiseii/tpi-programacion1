@@ -1,5 +1,5 @@
 # filtrar_paises.py
-def filtrar_paises(paises): #Filtra la lista de países.
+def filtrar_paises(paises):
     if not paises:
         print("No hay países cargados.")
         return
@@ -36,16 +36,21 @@ def filtrar_paises(paises): #Filtra la lista de países.
 
 def filtrar_por_continente(paises, continente):
     for pais in paises:
-        if pais['continente'].lower() == continente.lower():
+        if pais['continente'].lower() == continente.strip().lower():
             print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def filtrar_por_poblacion(paises, min_poblacion, max_poblacion):
+    if not min_poblacion.isdigit() or not max_poblacion.isdigit():
+        print("Error: Los valores deben ser números enteros positivos.")
+        return
     for pais in paises:
         if pais['poblacion'] >= int(min_poblacion) and pais['poblacion'] <= int(max_poblacion):
             print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def filtrar_por_superficie(paises, min_superficie, max_superficie):
+    if not min_superficie.isdigit() or not max_superficie.isdigit():
+        print("Error: Los valores deben ser números enteros positivos.")
+        return
     for pais in paises:
         if pais['superficie'] >= int(min_superficie) and pais['superficie'] <= int(max_superficie):
             print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
-        
