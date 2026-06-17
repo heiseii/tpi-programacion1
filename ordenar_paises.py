@@ -33,22 +33,17 @@ def ordenar_paises(paises): #Ordena la lista de países.
         
 
 def ordenar_por_nombre(paises): #Ordena la lista de países por nombre.
-    paises.sort(key=lambda x: x['nombre'].lower())
-    for pais in paises:
+    for pais in sorted(paises, key=lambda x: x['nombre'].lower()):
         print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def ordenar_por_poblacion(paises): #Ordena la lista de países por población.
-    paises.sort(key=lambda x: x['poblacion'], reverse=True)
-    for pais in paises:
+    for pais in sorted(paises, key=lambda x: x['poblacion'], reverse=True):
         print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def ordenar_por_superficie_asc(paises): #Ordena la lista de países por superficie (ascendente).
-    paises.sort(key=lambda x: x['superficie'])
-    for pais in paises:
+    for pais in sorted(paises, key=lambda x: x['superficie']):
         print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
 
 def ordenar_por_superficie_desc(paises): #Ordena la lista de países por superficie (descendente).
-    paises.sort(key=lambda x: x['superficie'], reverse=True)
-    for pais in paises:
+    for pais in sorted(paises, key=lambda x: x['superficie'], reverse=True):
         print(f"Nombre: {pais['nombre']} | Población: {pais['poblacion']:,} | Superficie: {pais['superficie']:,} km² | Continente: {pais['continente']}")
-
