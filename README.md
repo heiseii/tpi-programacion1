@@ -17,14 +17,15 @@ Tecnicatura Universitaria en Programación - UTN
 - Implementación de `actualizar_pais()`
 - Implementación de `buscar_pais()` con soporte de coincidencia parcial
 - Implementación de todas las funciones de estadísticas (`mostrar_estadisticas()`, `pais_mas_poblado()`, `pais_menos_poblado()`, `promedio_poblacion()`, `promedio_superficie()`, `paises_por_continente()`)
+
 - Modularización del proyecto en archivos separados por responsabilidad
 
 **Juan Cruz Caminos (M26 C1-09)**
 - Creación y mantenimiento del dataset base (`paises.csv`)
 - Documentación técnica del proyecto (informe PDF)
-- Implementación de `filtrar_paises()` (filtrado por continente, rango de población y rango de superficie)
-- Implementación de `ordenar_paises()` (ordenamiento por nombre, población y superficie, ascendente y descendente)
-
+- Implementación de `filtrar_paises()`
+- Implementacion de `ordenar_paises()`
+  
 ---
 
 ## Requisitos
@@ -55,11 +56,23 @@ python3 main.py
 ## Estructura del proyecto
 tpi-programacion1/
 
-├── main.py                 # Archivo principal, contiene el bucle del programa
+├── main.py                 # Punto de entrada, contiene el bucle principal del programa
 
-├── menu.py                 # Función que muestra y gestiona el menú de opciones
+├── menu.py                 # Muestra el menú y devuelve la opción elegida por el usuario
 
-├── mostrar_estadisticas.py # Funciones de cálculo y visualización de estadísticas
+├── agregar_pais.py         # Validación y alta de nuevos países
+
+├── actualizar_pais.py      # Modificación de población o superficie de un país existente
+
+├── buscar_pais.py          # Búsqueda por nombre con coincidencia parcial o exacta
+
+├── filtrar_paises.py       # Filtrado por continente, rango de población o superficie
+
+├── ordenar_paises.py       # Ordenamiento por nombre, población o superficie
+
+├── mostrar_estadisticas.py # Cálculo y visualización de estadísticas
+
+├── guardar_paises.py       # Reescritura del CSV a partir de la lista en memoria
 
 ├── paises.csv              # Dataset base con países precargados
 
@@ -78,6 +91,7 @@ tpi-programacion1/
 | 5. Ordenar países | `ordenar_paises()` | Ordena la lista por nombre, población o superficie en dirección ascendente o descendente según elija el usuario. |
 | 6. Estadísticas | `mostrar_estadisticas()` | Calcula y muestra el país con mayor y menor población, el promedio de población y superficie, y el agrupamiento de países por continente. |
 | 7. Salir | — | Termina el bucle principal y cierra el programa. |
+
 ---
 
 ## Ejemplos de uso
@@ -104,13 +118,35 @@ Nombre: Argentina | Población: 45,376,763 | Superficie: 2,780,400 km² | Contin
 
 Nombre: Alemania  | Población: 83,149,300 | Superficie: 357,022 km²   | Continente: Europa
 
+**Filtrar por continente:**
+
+Seleccione una opción: 4
+
+Filtrar por continente
+Filtrar por población
+Filtrar por superficie
+Cancelar
+
+Seleccione una opción: 1
+
+Ingrese el continente: Asia
+
+Nombre: Japón  | Población: 125,800,000 | Superficie: 377,975 km²   | Continente: Asia
+
+Nombre: India  | Población: 1,380,004,385 | Superficie: 3,287,263 km² | Continente: Asia
+
+Nombre: China  | Población: 1,439,323,776 | Superficie: 9,596,961 km² | Continente: Asia
+
+
 **Estadísticas:**
+
+Estadísticas:
 
 País más poblado: China
 
 País menos poblado: Italia
 
-Promedio población: 480,907,972
+Promedio población: 480,907,972 habitantes.
 
 Promedio superficie: 3,077,674
 Países por continente:
@@ -129,8 +165,8 @@ El archivo `paises.csv` incluye 9 países precargados:
 Argentina, Brasil, Estados Unidos, Alemania, Francia, Italia, Japón, India y China.
 
 El formato del archivo es el siguiente:
-
 nombre,poblacion,superficie,continente
+
 Argentina,45376763,2780400,América
 
 ---
